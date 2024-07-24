@@ -10,6 +10,8 @@ local keep = {
     ["minecraft:coal"] = true,
     ["minecraft:bucket"] = true,
     ["minecraft:ancient_debris"] = true,
+    ["minecraft:quartz"] = true,
+    ["minecraft:gold_nugget"] = true,
 }
 local badFluid = "minecraft:lava"
 local dir = 1
