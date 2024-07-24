@@ -3,7 +3,7 @@
 -- Variables
  
 local tArgs = {...}
- 
+local fuel = "minecraft:lava_bucket"
 
 local keep = {
   [fuel] = true,
@@ -18,7 +18,8 @@ local keep = {
   ["minecraft:quartz"] = true,
   ["minecraft:gold_nugget"] = true,
 }
-if #tArgs == 0 then 
+
+if #tArgs == 0 then
   print("Usage: flat [length] [width] [flags]") 
   return
 else
