@@ -15,19 +15,20 @@ local badFluid = "minecraft:lava"
 local dir = 1
 local length = 30
 local forwardCounter = 0 -- Counter for forward moves without finding anything to break
+print("Initial fuel Level: ", turtle.getFuelLevel())
 
 local function attemptRefuel()
+    print("Fuel low, attempting to refuel... ")
     for i = 1, 16 do                                         -- for each slot in the chest
         local item = turtle.getItemDetail(i, false)
         if item then                                         -- if there is an item in this slot
             if (string.format("%s", item.name) == fuel) then -- if the item is in the whitelist
                 turtle.select(i)
+                turtle.refuel(1)
+                print("Fuel Level: ", turtle.getFuelLevel())
             end
         end
     end
-    print("Attempting to refuel... ")
-    turtle.refuel(1)
-    print("Fuel Level: ", turtle.getFuelLevel())
 end
 
 local function checkInv()
