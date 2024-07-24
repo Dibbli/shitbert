@@ -109,8 +109,8 @@ local function loop()
 
     if not turtle.detect() then
         forwardCounter = forwardCounter + 1
-        if forwardCounter >= 6 then
-            print("Stopping due to moving forward 6 times without finding anything to mine.")
+        if forwardCounter >= 10 then
+            print("Stopping due to moving forward 10 times without finding anything to mine.")
             os.exit()
         end
     else
