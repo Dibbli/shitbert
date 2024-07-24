@@ -7,6 +7,7 @@ local fuel = "minecraft:lava_bucket"
 
 local keep = {
   [fuel] = true,
+  ["minecraft:charcoal"] = true,
   ["minecraft:raw_iron"] = true,
   ["minecraft:raw_gold"] = true,
   ["minecraft:raw_copper"] = true,
