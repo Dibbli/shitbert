@@ -1,3 +1,6 @@
+local length = 30
+-- EDIT THIS ^^^ TO CHANGE THE LENGTH OF THE TUNNEL
+
 local pos = 0
 local fuel = "minecraft:lava_bucket"
 local keep = {
@@ -15,7 +18,6 @@ local keep = {
 }
 local badFluid = "minecraft:lava"
 local dir = 1
-local length = 30
 local forwardCounter = 0 -- Counter for forward moves without finding anything to break
 print("Initial fuel Level: ", turtle.getFuelLevel())
 
