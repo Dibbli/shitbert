@@ -14,27 +14,27 @@ local keep = {
 local badFluid = "minecraft:lava"
 local dir = 1
 local length = 30
-local forwardCounter = 0 -- Counter for forward moves without finding stone
+local forwardCounter = 0 -- Counter for forward moves without finding anything to break
 
-local function refuel()
+local function attemptRefuel()
     for i = 1, 16 do                                         -- for each slot in the chest
         local item = turtle.getItemDetail(i, false)
         if item then                                         -- if there is an item in this slot
-            if (string.format("%s", item.name) == fuel) then -- if the item is in the blacklist
+            if (string.format("%s", item.name) == fuel) then -- if the item is in the whitelist
                 turtle.select(i)
             end
         end
     end
-    while (turtle.getFuelLevel() < 160) do
-        turtle.refuel(1)
-    end
+    print("Attempting to refuel... ")
+    turtle.refuel(1)
+    print("Fuel Level: ", turtle.getFuelLevel())
 end
 
 local function checkInv()
     for i = 1, 16 do                                         -- for each slot in the chest
         local item = turtle.getItemDetail(i, false)
         if item then                                         -- if there is an item in this slot
-            if not keep[string.format("%s", item.name)] then -- if the item is in the blacklist
+            if not keep[string.format("%s", item.name)] then -- if the item is not in the whitelist
                 turtle.select(i)
                 turtle.drop()
             end
@@ -46,14 +46,14 @@ local function select()
     for i = 1, 16 do                                         -- for each slot in the chest
         local item = turtle.getItemDetail(i, false)
         if item then                                         -- if there is an item in this slot
-            if not keep[string.format("%s", item.name)] then -- if the item is NOT in the blacklist
+            if not keep[string.format("%s", item.name)] then -- if the item is NOT in the whitelist
                 turtle.select(i)
             end
         end
     end
 end
 
-local function lava()
+local function lava() --allows the turtle to detect lava infront of it and place a block to remove it
     local isBlock, block = turtle.inspectUp()
     if isBlock then
         if block.name == "minecraft:lava" then
@@ -68,7 +68,7 @@ local function lava()
             turtle.down()
         end
     end
-    isBlock, block = turtle.inspectDown()
+    isBlock, block = turtle.inspectDown() --also check for lava below the turtle
     if isBlock then
         if block.name == "minecraft:lava" then
             turtle.down()
@@ -92,15 +92,12 @@ local function loop()
     while ready do
         while turtle.detect() do
             turtle.dig()
-            print("block in front")
         end
         while turtle.detectUp() do
             turtle.digUp()
-            print("block on top")
         end
         while turtle.detectDown() do
             turtle.digDown()
-            print("block on bottom")
         end
 
         if not turtle.detect() then
@@ -113,7 +110,7 @@ local function loop()
     if not turtle.detect() then
         forwardCounter = forwardCounter + 1
         if forwardCounter >= 6 then
-            print("Stopping due to moving forward 6 times without finding stone.")
+            print("Stopping due to moving forward 6 times without finding anything to mine.")
             os.exit()
         end
     else
@@ -126,7 +123,9 @@ while true do
         pos = -1
     end
 
-    refuel()
+    while (turtle.getFuelLevel() < 160) do
+        attemptRefuel()
+    end
     loop()
 
     if (pos == -1) then
